@@ -33,32 +33,42 @@ function tdWrap(list, pos) {
     str = wrapWithTag(str, "tr");
 
     list.forEach(el => {
+
+        var dateNTime = el.dt_txt.split(" ");
+        var date = dateNTime[0].split("-");
+        var time = dateNTime[1].split(":");
+        if (time[0] == 0) {
+            str += "<tr><td>" + (date[1] + "-" + date[2]) + "</td></tr>";
+        }
+        dateStr = time[0] + ":00";
+
+
         if (ind == pos) {
-            str += wrapTagNFont(el.dt_txt, fontSize, "td");
-            str += wrapTagNFont(el.main.temp, fontSize, "td");
-            str += wrapTagNFont(el.main.humidity, fontSize, "td");
+            str += wrapTagNFont(dateStr, fontSize, "td");
+            str += wrapTagNFont(el.main.temp + "°C", fontSize, "td");
+            str += wrapTagNFont(el.main.humidity + "%", fontSize, "td");
             str += wrapTagNFont(el.weather[0].description, fontSize, "td");
-            str += wrapTagNFont(el.clouds.all, fontSize, "td");
-            str += wrapTagNFont(el.wind.speed, fontSize, "td");
+            str += wrapTagNFont(el.clouds.all + "%", fontSize, "td");
+            str += wrapTagNFont(el.wind.speed + " kph", fontSize, "td");
 
             if (el.rain == undefined) {
                 str += wrapTagNFont("no rain", fontSize, "td");
             } else {
-                str += wrapTagNFont(el.rain["3h"], fontSize, "td");
+                str += wrapTagNFont(el.rain["3h"] + "mm", fontSize, "td");
             }
         } else {
 
-            str += wrapWithTag(el.dt_txt, "td");
-            str += wrapWithTag(el.main.temp, "td");
-            str += wrapWithTag(el.main.humidity, "td");
+            str += wrapWithTag(dateStr, "td");
+            str += wrapWithTag(el.main.temp + "°C", "td");
+            str += wrapWithTag(el.main.humidity + "%", "td");
             str += wrapWithTag(el.weather[0].description, "td");
-            str += wrapWithTag(el.clouds.all, "td");
-            str += wrapWithTag(el.wind.speed, "td");
+            str += wrapWithTag(el.clouds.all + "%", "td");
+            str += wrapWithTag(el.wind.speed + " kph", "td");
 
             if (el.rain == undefined) {
                 str += wrapWithTag("no rain", "td");
             } else {
-                str += wrapWithTag(el.rain["3h"], "td");
+                str += wrapWithTag(el.rain["3h"] + "mm", "td");
             }
         }
         ind++;
@@ -66,7 +76,7 @@ function tdWrap(list, pos) {
         str = wrapWithTag(str, "tr");
 
         if (el.dt_txt[11] == "2") {
-            str += "<tr><td> --------------- </td></tr>";
+            str += "<tr><td> ************** </td></tr>";
         }
     });
 
